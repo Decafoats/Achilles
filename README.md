@@ -1,5 +1,13 @@
+<!-- TABLE OF CONTENTS -->
+Table of Contents
+  <ol>
+    <li><a href="#-objective">Objective</a></li>
+    <li><a href="#-overview">Overview</a></li>
+    <li><a href="#-reasoning">Contributing</a></li>
+    <li><a href="#-vlogs">License</a></li>
+  </ol>
 
-# ENSE 400/477 Capstone Project
+<h3 align="center">Achilles</h3>
 
 # 🥅 Objective: 
 We want to deliver a product to assist the general public in analyzing their feet health. 
@@ -12,3 +20,10 @@ The reasoning for this project is that foot health is essential, and the average
 
 # 📹 Vlogs:
 - Vlog #1: https://www.youtube.com/watch?v=eNYMMGQU37E
+
+# 🤓 Authors:
+- [@JackZhao](https://github.com/Decafoats)
+- [@AhrasAli](https://github.com/AhrasAli)
+
+# 📃 License
+This project is licensed under the Creative Commons License - see the LICENSE.md file for details
