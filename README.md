@@ -26,4 +26,4 @@ The reasoning for this project is that foot health is essential, and the average
 - [@AhrasAli](https://github.com/AhrasAli)
 
 # 📃 License
-This project is licensed under the Creative Commons License - see the LICENSE.md file for details
+This project is licensed under the Creative Commons License - see the [LICENSE.md](LICENSE.md) file for details
