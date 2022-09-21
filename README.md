@@ -1,11 +1,9 @@
 <!-- TABLE OF CONTENTS -->
-Table of Contents
-  <ol>
-    <li><a href="#-objective">Objective</a></li>
-    <li><a href="#-overview">Overview</a></li>
-    <li><a href="#-reasoning">Contributing</a></li>
-    <li><a href="#-vlogs">License</a></li>
-  </ol>
+**Table of Contents:**  
+  - <a href="#-objective">Objective</a>
+  - <a href="#-overview">Overview</a>
+  - <a href="#-reasoning">Contributing</a>
+  - <a href="#-vlogs">License</a>
 
 <h3 align="center">Achilles</h3>
 
