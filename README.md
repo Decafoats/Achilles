@@ -23,5 +23,5 @@ The reasoning for this project is that foot health is essential, and the average
 - [@JackZhao](https://github.com/Decafoats)
 - [@AhrasAli](https://github.com/AhrasAli)
 
-# 📃 License
+# 📃 License: 
 This project is licensed under the Creative Commons License - see the [LICENSE.md](LICENSE.md) file for details
