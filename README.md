@@ -4,8 +4,11 @@
   - <a href="#-overview">Overview</a>
   - <a href="#-reasoning">Contributing</a>
   - <a href="#-vlogs">License</a>
-
-<h3 align="center">Achilles</h3>
+<div align="center">
+  <a href="https://github.com/Decafoats/Achilles">
+    <img src="https://drive.google.com/uc?id=1MBc1xrS4VAWlI1CFnU8Uq01G4Cnaw_ie" alt="Logo" width="200" height="200">
+  </a>
+</div>
 
 # 🥅 Objective: 
 We want to deliver a product to assist the general public in analyzing their feet health. 
