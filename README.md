@@ -28,3 +28,7 @@ The reasoning for this project is that foot health is essential, and the average
 
 # 📃 License: 
 This project is licensed under the Creative Commons License - see the [LICENSE.md](LICENSE.md) file for details
+
+# 🤝🏻 Attribute:
+
+<a href="https://www.flaticon.com/free-icons/feet" title="feet icons">Feet icons created by PIXARTIST - Flaticon</a>
