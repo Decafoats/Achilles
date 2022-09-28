@@ -2,8 +2,10 @@
 **Table of Contents:**  
   - <a href="#-objective">Objective</a>
   - <a href="#-overview">Overview</a>
-  - <a href="#-reasoning">Contributing</a>
-  - <a href="#-vlogs">License</a>
+  - <a href="#-reasoning">Reasoning</a>
+  - <a href="#-vlogs">Vlogs</a>
+  - <a href="#-authors">Authors</a>
+  - <a href="#-license">License</a>
   - <a href="#-attribution">Attribution</a>
 <div align="center">
   <a href="https://github.com/Decafoats/Achilles">
