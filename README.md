@@ -26,8 +26,7 @@ Please refer to this official [React Native documentation](https://reactnative.d
   - Intel x86 Atom_64 System Image
   - Google APIs Intel x86 Atom System Image
 - **Hyper-V enabled**
-
-The virtual device we are using for testing is: Google Pixel 4 with Android 31 API.
+- **Virtual Device** : Google Pixel 4 with *Android 31 API*.
 
 # 🥅 Objective: 
 
