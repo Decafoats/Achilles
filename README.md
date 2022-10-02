@@ -26,7 +26,7 @@ Please refer to this official [React Native documentation](https://reactnative.d
   - Intel x86 Atom_64 System Image
   - Google APIs Intel x86 Atom System Image
 - **Hyper-V enabled**
-- **Virtual Device** : Google Pixel 4 with *Android 31 API*.
+- **Virtual Device** : Google Pixel 4 with *Android 31 API*
 
 # 🥅 Objective: 
 
@@ -51,7 +51,7 @@ The reasoning for this project is that foot health is essential, and the average
 
 # 📃 License: 
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the **Apache License 2.0** - see the [LICENSE.md](LICENSE.md) file for details.
 
 # 🤝🏻 Attribution:
 
