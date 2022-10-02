@@ -1,5 +1,6 @@
 <!-- TABLE OF CONTENTS -->
 **Table of Contents:**  
+  - <a href="#-run-locally">Run Locally</a>
   - <a href="#-objective">Objective</a>
   - <a href="#-overview">Overview</a>
   - <a href="#-reasoning">Reasoning</a>
@@ -12,6 +13,20 @@
     <img src="https://drive.google.com/uc?id=1XZ0q3Rr6h11FwcpX8ioMU66L4nnqG4es" alt="Logo" width="200" height="200">
   </a>
 </div>
+
+# 💻 Run Locally:
+
+Please refer to this official [React Native documentation](https://reactnative.dev/docs/environment-setup) for the initial environment setup. To run this project, you would need the following installed on your local machine:
+- **Node**: v18.10.0
+- **NPM**: 8.19.2
+- **OpenJDK**: 11.0.12
+- **Android Studio**: Dolphin 2021.3.1
+- **Android 12(S) SDK**:
+  - Android SDK Platform 31
+  - Intel x86 Atom_64 System Image
+  - Google APIs Intel x86 Atom System Image
+- **Hyper-V enabled**
+- **Virtual Device** : Google Pixel 4 with *Android 31 API*.
 
 # 🥅 Objective: 
 
