@@ -10,7 +10,7 @@
   - <a href="#-attribution">Attribution</a>
 <div align="center">
   <a href="https://github.com/Decafoats/Achilles">
-    <img src="https://drive.google.com/uc?id=1XZ0q3Rr6h11FwcpX8ioMU66L4nnqG4es" alt="Logo" width="200" height="200">
+    <img src="https://drive.google.com/uc?id=1eOylrPWnAiKvhjGB07hEK3vgSTyZWScf" alt="Logo" width="215" height="215">
   </a>
 </div>
 
