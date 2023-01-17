@@ -10,7 +10,7 @@
   - <a href="#-attribution">Attribution</a>
 <div align="center">
   <a href="https://github.com/Decafoats/Achilles">
-    <img src="https://drive.google.com/uc?id=1XZ0q3Rr6h11FwcpX8ioMU66L4nnqG4es" alt="Logo" width="200" height="200">
+    <img src="https://drive.google.com/uc?id=1PQvXtJPQVT_ms-5S9yZ85gTKg4Xh1ykv" alt="Logo" width="215" height="215">
   </a>
 </div>
 
@@ -26,7 +26,7 @@ Please refer to this official [React Native documentation](https://reactnative.d
   - Intel x86 Atom_64 System Image
   - Google APIs Intel x86 Atom System Image
 - **Hyper-V enabled**
-- **Virtual Device** : Google Pixel 4 with *Android 31 API*.
+- **Virtual Device** : Google Pixel 4 with *Android 31 API*
 
 # 🥅 Objective: 
 
@@ -43,6 +43,8 @@ The reasoning for this project is that foot health is essential, and the average
 # 📹 Vlogs:
 
 - Vlog #1: https://www.youtube.com/watch?v=eNYMMGQU37E
+- Vlog #2: https://www.youtube.com/watch?v=1mtagPsDHrE
+- Vlog #3: https://www.youtube.com/watch?v=FPJ304L_uD8
 
 # 🤓 Authors:
 
@@ -51,7 +53,7 @@ The reasoning for this project is that foot health is essential, and the average
 
 # 📃 License: 
 
-This project is licensed under the Creative Commons License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the **Apache License 2.0** - see the [LICENSE.md](LICENSE.md) file for details.
 
 # 🤝🏻 Attribution:
 
