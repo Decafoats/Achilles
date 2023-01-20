@@ -5,6 +5,7 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PermissionsAndroid } from 'react-native';
+import { continueStatement } from '@babel/types';
 
 const ImageAnalyzerScreen = () => {
   const { height } = useWindowDimensions();
@@ -12,6 +13,8 @@ const ImageAnalyzerScreen = () => {
   const [state, setState] = useState({
     photo: ''
   })
+  const [filename, setFileName] = useState()
+
 
   const option = {
     mediaType: 'photo',
@@ -45,8 +48,10 @@ const ImageAnalyzerScreen = () => {
             toast('Error while opening camera.', res.errorCode)
             console.log(res.errorMessage)
           } else {
+            const filename = res.assets[0].uri.substring(res.assets[0].uri.lastIndexOf('/') + 1);
             console.log(res.assets[0].uri)
             setState({ photo: res.assets[0].uri })
+            setFileName(filename);
           }
         })
         console.log("Camera permission given");
@@ -66,13 +71,40 @@ const ImageAnalyzerScreen = () => {
         toast('Error while opening gallery.', res.errorCode)
         console.log(res.errorMessage)
       } else {
+        const filename = res.assets[0].uri.substring(res.assets[0].uri.lastIndexOf('/') + 1);
         console.log(res.assets[0].uri)
         setState({ photo: res.assets[0].uri })
+        setFileName(filename);
       }
     })
   }
-  // "@tensorflow/tfjs": "^4.2.0",
-  //"@tensorflow/tfjs-react-native": "^0.8.0",
+
+  const onSubmit = async e => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('file', {
+      name: filename,
+      type: 'image/jpeg',
+      uri:
+        Platform.OS === "android"
+          ? state.photo
+          : state.photo.replace("file://", "")
+    });
+    console.log(state.photo);
+    console.log("filename: " + filename)
+
+    fetch('http://10.0.2.2:5000/upload', {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        // setPrediction(data);
+      });
+  };
+
+
   return (
     <View style={styles.root}>
       <Image
@@ -105,6 +137,7 @@ const ImageAnalyzerScreen = () => {
       <View style={styles.button}>
         <CustomButton text="Camera" onPress={() => requestCameraPermission()} />
         <CustomButton text="Gallery" onPress={onOpenGalleryPressed} />
+        <CustomButton text="Predict" onPress={onSubmit} />
       </View>
     </View >
   );
