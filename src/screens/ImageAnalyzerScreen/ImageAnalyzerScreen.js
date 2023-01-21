@@ -14,6 +14,7 @@ const ImageAnalyzerScreen = () => {
     photo: ''
   })
   const [filename, setFileName] = useState()
+  const [prediction, setPrediction] = useState(null)
 
 
   const option = {
@@ -93,14 +94,15 @@ const ImageAnalyzerScreen = () => {
     console.log(state.photo);
     console.log("filename: " + filename)
 
-    fetch('http://10.0.2.2:5000/upload', {
+    fetch('https://achilles-flask.azurewebsites.net/upload', {
       method: 'POST',
       body: formData
     })
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        // setPrediction(data);
+        setPrediction(data);
+        console.log(prediction)
       });
   };
 
@@ -131,8 +133,25 @@ const ImageAnalyzerScreen = () => {
           style={[styles.image, { height: height }]}
           resizeMode="contain"
         />
-      )
-      }
+      )}
+
+      {prediction == null ? (
+        <Text>
+        </Text>
+      ) : (
+        <Text
+          style={{
+            fontStyle: 'italic',
+            paddingHorizontal: 40,
+            textAlign: 'center',
+            textShadowColor: '#777',
+            textShadowOffset: { width: -1, height: 1 },
+            textShadowRadius: 1,
+            marginTop: 20,
+          }}>
+          There is an {parseFloat(prediction.confidence_score.substring(0, 6)) * 100}% that you have {prediction.class_name}
+        </Text>
+      )}
 
       <View style={styles.button}>
         <CustomButton text="Camera" onPress={() => requestCameraPermission()} />
@@ -146,19 +165,18 @@ const ImageAnalyzerScreen = () => {
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
+    padding: 50,
   },
   logo: {
     width: '100%',
     maxWidth: 250,
     maxHeight: 250,
-    marginTop: 20,
   },
   button: {
     width: '80%',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginVertical: 50,
-    paddingHorizontal: 100,
+    paddingHorizontal: 70,
   },
   image: {
     width: '100%',
