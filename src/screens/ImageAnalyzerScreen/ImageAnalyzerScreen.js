@@ -5,6 +5,7 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PermissionsAndroid } from 'react-native';
+import { continueStatement } from '@babel/types';
 
 const ImageAnalyzerScreen = () => {
   const { height } = useWindowDimensions();
@@ -12,6 +13,9 @@ const ImageAnalyzerScreen = () => {
   const [state, setState] = useState({
     photo: ''
   })
+  const [filename, setFileName] = useState()
+  const [prediction, setPrediction] = useState(null)
+
 
   const option = {
     mediaType: 'photo',
@@ -45,8 +49,10 @@ const ImageAnalyzerScreen = () => {
             toast('Error while opening camera.', res.errorCode)
             console.log(res.errorMessage)
           } else {
+            const filename = res.assets[0].uri.substring(res.assets[0].uri.lastIndexOf('/') + 1);
             console.log(res.assets[0].uri)
             setState({ photo: res.assets[0].uri })
+            setFileName(filename);
           }
         })
         console.log("Camera permission given");
@@ -66,13 +72,41 @@ const ImageAnalyzerScreen = () => {
         toast('Error while opening gallery.', res.errorCode)
         console.log(res.errorMessage)
       } else {
+        const filename = res.assets[0].uri.substring(res.assets[0].uri.lastIndexOf('/') + 1);
         console.log(res.assets[0].uri)
         setState({ photo: res.assets[0].uri })
+        setFileName(filename);
       }
     })
   }
-  // "@tensorflow/tfjs": "^4.2.0",
-  //"@tensorflow/tfjs-react-native": "^0.8.0",
+
+  const onSubmit = async e => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('file', {
+      name: filename,
+      type: 'image/jpeg',
+      uri:
+        Platform.OS === "android"
+          ? state.photo
+          : state.photo.replace("file://", "")
+    });
+    console.log(state.photo);
+    console.log("filename: " + filename)
+
+    fetch('https://achilles-flask.azurewebsites.net/upload', {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setPrediction(data);
+        console.log(prediction)
+      });
+  };
+
+
   return (
     <View style={styles.root}>
       <Image
@@ -99,12 +133,30 @@ const ImageAnalyzerScreen = () => {
           style={[styles.image, { height: height }]}
           resizeMode="contain"
         />
-      )
-      }
+      )}
+
+      {prediction == null ? (
+        <Text>
+        </Text>
+      ) : (
+        <Text
+          style={{
+            fontStyle: 'italic',
+            paddingHorizontal: 40,
+            textAlign: 'center',
+            textShadowColor: '#777',
+            textShadowOffset: { width: -1, height: 1 },
+            textShadowRadius: 1,
+            marginTop: 20,
+          }}>
+          There is an {parseFloat(prediction.confidence_score.substring(0, 6)) * 100}% that you have {prediction.class_name}
+        </Text>
+      )}
 
       <View style={styles.button}>
         <CustomButton text="Camera" onPress={() => requestCameraPermission()} />
         <CustomButton text="Gallery" onPress={onOpenGalleryPressed} />
+        <CustomButton text="Predict" onPress={onSubmit} />
       </View>
     </View >
   );
@@ -113,19 +165,18 @@ const ImageAnalyzerScreen = () => {
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
+    padding: 50,
   },
   logo: {
     width: '100%',
     maxWidth: 250,
     maxHeight: 250,
-    marginTop: 20,
   },
   button: {
     width: '80%',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginVertical: 50,
-    paddingHorizontal: 100,
+    paddingHorizontal: 70,
   },
   image: {
     width: '100%',
