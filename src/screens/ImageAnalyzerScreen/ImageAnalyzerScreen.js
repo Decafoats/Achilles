@@ -1,11 +1,12 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet, useWindowDimensions, ToastAndroid, async } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Logo from '../../../assets/images/Achilles.png'
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PermissionsAndroid } from 'react-native';
 import { continueStatement } from '@babel/types';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 const ImageAnalyzerScreen = () => {
   const { height } = useWindowDimensions();
@@ -16,12 +17,10 @@ const ImageAnalyzerScreen = () => {
   const [filename, setFileName] = useState()
   const [prediction, setPrediction] = useState(null)
 
-
   const option = {
     mediaType: 'photo',
     quality: 1,
     saveToPhotos: true,
-
   }
 
   const toast = (msg) => {
@@ -53,6 +52,7 @@ const ImageAnalyzerScreen = () => {
             console.log(res.assets[0].uri)
             setState({ photo: res.assets[0].uri })
             setFileName(filename);
+            setPrediction(null);
           }
         })
         console.log("Camera permission given");
@@ -76,12 +76,20 @@ const ImageAnalyzerScreen = () => {
         console.log(res.assets[0].uri)
         setState({ photo: res.assets[0].uri })
         setFileName(filename);
+        setPrediction(null);
       }
     })
   }
 
+  const [loading, setLoading] = useState(false);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
   const onSubmit = async e => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append('file', {
       name: filename,
@@ -102,7 +110,8 @@ const ImageAnalyzerScreen = () => {
       .then(data => {
         console.log(data);
         setPrediction(data);
-        console.log(prediction)
+        console.log(prediction);
+        setLoading(false);
       });
   };
 
@@ -117,14 +126,7 @@ const ImageAnalyzerScreen = () => {
 
       {state.photo == "" ? (
         <Text
-          style={{
-            fontStyle: 'italic',
-            paddingHorizontal: 40,
-            textAlign: 'center',
-            textShadowColor: '#777',
-            textShadowOffset: { width: -1, height: 1 },
-            textShadowRadius: 1,
-          }}>
+          style={styles.italicText}>
           Take a photo with your camera, or upload an image from your gallery!
         </Text>
       ) : (
@@ -135,29 +137,30 @@ const ImageAnalyzerScreen = () => {
         />
       )}
 
-      {prediction == null ? (
-        <Text>
+      {prediction ? (
+        <Text style={styles.italicText}>
+          There is a {parseFloat(prediction.confidence_score.substring(0, 6)) * 100}% chance that you have {prediction.class_name}
         </Text>
       ) : (
-        <Text
-          style={{
-            fontStyle: 'italic',
-            paddingHorizontal: 40,
-            textAlign: 'center',
-            textShadowColor: '#777',
-            textShadowOffset: { width: -1, height: 1 },
-            textShadowRadius: 1,
-            marginTop: 20,
-          }}>
-          There is an {parseFloat(prediction.confidence_score.substring(0, 6)) * 100}% that you have {prediction.class_name}
-        </Text>
+        <Text></Text>
       )}
 
       <View style={styles.button}>
         <CustomButton text="Camera" onPress={() => requestCameraPermission()} />
         <CustomButton text="Gallery" onPress={onOpenGalleryPressed} />
-        <CustomButton text="Predict" onPress={onSubmit} />
+        {filename && <CustomButton text="Predict" onPress={onSubmit} />}
       </View>
+
+      {prediction == null ? (
+        null
+      ) : (
+        <View style={styles.questionnaireContainer}>
+          <Text style={{ fontSize: 15, fontWeight: 'bold', textAlign: 'center' }}>Answer a short questionnaire to increase the result accuracy!</Text>
+          <View style={styles.questionnaireButton}>
+            <CustomButton text="Questionnaire" onPress={() => navigation.navigate("QuestionnaireScreen", { prediction: prediction.class_name.trim() })} />
+          </View>
+        </View>
+      )}
     </View >
   );
 };
@@ -165,23 +168,40 @@ const ImageAnalyzerScreen = () => {
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
-    padding: 50,
+    padding: 18,
   },
   logo: {
     width: '100%',
-    maxWidth: 250,
-    maxHeight: 250,
+    maxWidth: 200,
+    maxHeight: 200,
   },
   button: {
-    width: '80%',
+    width: 80,
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingHorizontal: 70,
   },
   image: {
     width: '100%',
     maxWidth: 250,
     maxHeight: 250,
+  },
+  italicText: {
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 15,
+    paddingHorizontal: 25,
+  },
+  questionnaireContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingTop: 10
+  },
+  questionnaireButton: {
+    paddingTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: 150,
   }
 });
 
