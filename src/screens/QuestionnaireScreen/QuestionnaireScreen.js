@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 150,
+    width: 130,
   },
   questions: {
     flexDirection: 'row',

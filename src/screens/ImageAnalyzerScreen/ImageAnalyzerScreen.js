@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     maxHeight: 200,
   },
   button: {
-    width: 80,
+    width: 100,
     flexDirection: 'row',
     justifyContent: 'center',
   },

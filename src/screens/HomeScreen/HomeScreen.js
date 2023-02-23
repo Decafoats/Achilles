@@ -112,7 +112,7 @@ const HomeScreen = () => {
                     If you have any questions or comments about these Terms or Achilles, please contact the developers at xzn628@uregina.ca.
                   </Text>
                   <View style={{ alignItems: 'center', paddingTop: 20 }} >
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 100 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 120 }}>
                       <CustomButton text="I Accept" onPress={acceptTerms} />
                       <CustomButton text="I Decline" onPress={BackHandler.exitApp} />
                     </View>
@@ -138,10 +138,10 @@ const styles = StyleSheet.create({
     maxHeight: 250,
   },
   button: {
-    width: '80%',
+    width: 180,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginVertical: 270,
+    marginVertical: 280,
   },
   modalContainer: {
     flex: 1,
