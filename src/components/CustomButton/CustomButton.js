@@ -8,6 +8,7 @@ const CustomButton = ({ onPress, text, type = "PRIMARY", bgColor, fgColor }) => 
       style={[
         styles.container,
         styles[`container_${type}`],
+        styles.buttonClose,
         bgColor ? { backgroundColor: bgColor } : {}
       ]}>
       <Text
@@ -32,6 +33,12 @@ const styles = StyleSheet.create({
 
     alignItems: 'center',
     borderRadius: 5,
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   container_PRIMARY: {
     backgroundColor: '#005691',
@@ -44,6 +51,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     color: 'white',
+    textAlign: 'center',
   },
   text_TERTIARY: {
     color: 'gray',
