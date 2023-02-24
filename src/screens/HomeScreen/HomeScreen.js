@@ -9,7 +9,7 @@ const HomeScreen = () => {
   const [showTerms, setShowTerms] = useState(true);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-  const { height } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
 
   const onQuestionnairePressed = () => {
@@ -37,7 +37,7 @@ const HomeScreen = () => {
         resizeMode="contain"
       />
 
-      <View style={styles.button}>
+      <View style={[styles.button, { width: width * 0.4, marginVertical: height * 0.4 }]}>
         <CustomButton text="Questionnaire" onPress={onQuestionnairePressed} />
         <CustomButton text="Image Analyzer" onPress={onImageAnalyzerPressed} />
       </View>
@@ -112,7 +112,7 @@ const HomeScreen = () => {
                     If you have any questions or comments about these Terms or Achilles, please contact the developers at xzn628@uregina.ca.
                   </Text>
                   <View style={{ alignItems: 'center', paddingTop: 20 }} >
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 120 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: width * 0.25 }}>
                       <CustomButton text="I Accept" onPress={acceptTerms} />
                       <CustomButton text="I Decline" onPress={BackHandler.exitApp} />
                     </View>
@@ -138,10 +138,10 @@ const styles = StyleSheet.create({
     maxHeight: 250,
   },
   button: {
-    width: 180,
+    //width: 180,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginVertical: 280,
+    //marginVertical: 280,
   },
   modalContainer: {
     flex: 1,

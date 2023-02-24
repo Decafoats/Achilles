@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import questions from "../../data/QuestionnaireData";
 
 const QuestionnaireScreen = () => {
-  const { height } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const navigation = useNavigation();
 
   // Pull JSON data from QuestionnaireData
@@ -171,7 +171,7 @@ const QuestionnaireScreen = () => {
           )
         }
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-          <View style={styles.button}>
+          <View style={[styles.button, { width: width * 0.25 }]}>
             {previousQuestions.length !== 0 && (
               <CustomButton
                 text="Previous Question"
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 130,
+    //width: 130,
   },
   questions: {
     flexDirection: 'row',
