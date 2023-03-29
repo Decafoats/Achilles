@@ -89,8 +89,10 @@ const ImageAnalyzerScreen = () => {
     })
   }
 
-  const displayImageLogic = (index) => {
-    if (state.photo === "" && prediction === null) {
+  const displayImageLogic = () => {
+    // Check if a photo is available
+    if (state.photo === "") {
+      // If no photo is available, display a message
       return (
         <Text style={styles.italicText}>
           Take a photo with your camera, or upload an image from your gallery!
@@ -98,7 +100,9 @@ const ImageAnalyzerScreen = () => {
       );
     }
 
-    if (state.photo !== "" && prediction === null) {
+    // Check if prediction is available
+    if (prediction === null) {
+      // If no prediction is available, display the photo
       return (
         <Image
           source={{ uri: state.photo }}
@@ -108,6 +112,7 @@ const ImageAnalyzerScreen = () => {
       );
     }
 
+    // Return null if no photo or prediction is available
     return null;
   }
 
