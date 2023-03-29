@@ -1,5 +1,5 @@
 // Import the necessary libraries and components
-import { View, Text, Image, TouchableOpacity, StyleSheet, useWindowDimensions, ToastAndroid, async } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, useWindowDimensions, ToastAndroid, async, Easing } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Logo from '../../../assets/images/Achilles.png'
 import CustomButton from '../../components/CustomButton/CustomButton';
@@ -8,8 +8,10 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PermissionsAndroid } from 'react-native';
 import { continueStatement } from '@babel/types';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 const ImageAnalyzerScreen = () => {
+  const PEDICTION_ERROR = 3
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
 
@@ -17,7 +19,7 @@ const ImageAnalyzerScreen = () => {
   const [state, setState] = useState({
     photo: ''
   })
-  const [filename, setFileName] = useState()
+  const [filename, setFileName] = useState(null)
   const [prediction, setPrediction] = useState(null)
 
   // Camera and gallery settings
@@ -87,6 +89,28 @@ const ImageAnalyzerScreen = () => {
     })
   }
 
+  const displayImageLogic = (index) => {
+    if (state.photo === "" && prediction === null) {
+      return (
+        <Text style={styles.italicText}>
+          Take a photo with your camera, or upload an image from your gallery!
+        </Text>
+      );
+    }
+
+    if (state.photo !== "" && prediction === null) {
+      return (
+        <Image
+          source={{ uri: state.photo }}
+          style={[styles.image, { height: height }]}
+          resizeMode="contain"
+        />
+      );
+    }
+
+    return null;
+  }
+
   // Initialize the loading state variable and set it to true when the form is submitted
   const [loading, setLoading] = useState(false);
 
@@ -131,26 +155,41 @@ const ImageAnalyzerScreen = () => {
         resizeMode="contain"
       />
 
-      {state.photo == "" ? (
-        <Text
-          style={styles.italicText}>
-          Take a photo with your camera, or upload an image from your gallery!
-        </Text>
-      ) : (
-        <Image
-          source={{ uri: state.photo }}
-          style={[styles.image, { height: height }]}
-          resizeMode="contain"
-        />
-      )}
+      {displayImageLogic()}
 
       {prediction ? (
-        <Text style={styles.italicText}>
-          There is a {parseFloat(prediction.confidence_score.substring(0, 6)) * 100}% chance that you have {prediction.class_name}
-        </Text>
+        <View style={{ paddingVertical: 25 }}>
+          <AnimatedCircularProgress
+            style={styles.animatedCircularProgress}
+            size={height * 0.22}
+            width={10}
+            fill={parseFloat(prediction.confidence_score.substring(0, 4)) * 100 - PEDICTION_ERROR}
+            tintColor="#005691"
+            backgroundColor="#98c5e4"
+            backgroundWidth={5}
+            lineCap="round"
+            duration={1800}>
+            {
+              (fill) => (
+                <Text style={{
+                  fontSize: height * 0.022,
+                  textAlign: 'center',
+                  textShadowColor: '#98c5e4',
+                  textShadowOffset: { width: 0, height: 0 },
+                  textShadowRadius: 10,
+                  color: '#005691'
+                }}>
+                  {parseFloat(prediction.confidence_score.substring(0, 4)) * 100 - PEDICTION_ERROR}%
+                  {'\n'}{prediction.class_name}
+                </Text>
+              )
+            }
+          </AnimatedCircularProgress>
+        </View>
       ) : (
         <Text></Text>
-      )}
+      )
+      }
 
       <View style={styles.button}>
         <CustomButton text="Camera" onPress={() => requestCameraPermission()} />
@@ -158,16 +197,18 @@ const ImageAnalyzerScreen = () => {
         {filename && <CustomButton text="Predict" onPress={onSubmit} />}
       </View>
 
-      {prediction == null ? (
-        null
-      ) : (
-        <View style={styles.questionnaireContainer}>
-          <Text style={{ fontSize: 15, fontWeight: 'bold', textAlign: 'center' }}>Answer a short questionnaire to increase the result accuracy!</Text>
-          <View style={styles.questionnaireButton}>
-            <CustomButton text="Questionnaire" onPress={() => navigation.navigate("QuestionnaireScreen", { prediction: prediction.class_name.trim() })} />
+      {
+        prediction == null ? (
+          null
+        ) : (
+          <View style={styles.questionnaireContainer}>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', textAlign: 'center' }}>Answer a short questionnaire to increase the result accuracy!</Text>
+            <View style={styles.questionnaireButton}>
+              <CustomButton text="Questionnaire" onPress={() => navigation.navigate("QuestionnaireScreen", { prediction: prediction.class_name.trim() })} />
+            </View>
           </View>
-        </View>
-      )}
+        )
+      }
     </View >
   );
 };
@@ -209,7 +250,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     width: 150,
+  },
+  animatedCircularProgress: {
+    // paddingVertical: 15,
   }
+
 });
 
 export default ImageAnalyzerScreen
