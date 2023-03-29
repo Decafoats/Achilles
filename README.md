@@ -34,6 +34,10 @@ Please refer to this official [React Native documentation](https://reactnative.d
 - Run the command `npx react-native run-android`
 - Must be either using an Android emulator or have an Android device plugged into PC to debug. 
 
+## Check out the Wiki page!
+
+👉🏼 Don't forget to explore our [Wiki page](https://github.com/Decafoats/Achilles/wiki) for more information! 👈🏼
+
 # 🥅 Objective: 
 
 We want to deliver a product to assist the general public in analyzing their feet health. 
