@@ -1,3 +1,4 @@
+// Import the necessary libraries and components
 import { View, Text, Image, TouchableOpacity, StyleSheet, useWindowDimensions, ToastAndroid, async } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Logo from '../../../assets/images/Achilles.png'
@@ -11,23 +12,27 @@ import LoadingScreen from '../LoadingScreen/LoadingScreen';
 const ImageAnalyzerScreen = () => {
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
+
+  // Initialize the state variables and update them whenever needed
   const [state, setState] = useState({
     photo: ''
   })
   const [filename, setFileName] = useState()
   const [prediction, setPrediction] = useState(null)
 
+  // Camera and gallery settings
   const option = {
     mediaType: 'photo',
     quality: 1,
     saveToPhotos: true,
   }
 
+  // Display toast messages on the screen.
   const toast = (msg) => {
     ToastAndroid.show(msg, ToastAndroid.SHORT)
   }
 
-
+  // Request permission from the user to access the camera and handle the response
   const requestCameraPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -64,6 +69,7 @@ const ImageAnalyzerScreen = () => {
     }
   }
 
+  // Open the gallery and handle the response
   const onOpenGalleryPressed = () => {
     launchImageLibrary(option, (res) => {
       if (res.didCancel) {
@@ -81,6 +87,7 @@ const ImageAnalyzerScreen = () => {
     })
   }
 
+  // Initialize the loading state variable and set it to true when the form is submitted
   const [loading, setLoading] = useState(false);
 
   if (loading) {
@@ -101,7 +108,7 @@ const ImageAnalyzerScreen = () => {
     });
     console.log(state.photo);
     console.log("filename: " + filename)
-
+    // Use the fetch function to send the photo to the server and get a prediction back
     fetch('https://achilles-flask.azurewebsites.net/upload', {
       method: 'POST',
       body: formData

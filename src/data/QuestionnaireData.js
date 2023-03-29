@@ -1,3 +1,9 @@
+/**
+ * This code is exporting an array of objects representing a questionnaire for foot-related health issues. 
+ * Each object represents a question and its answer options, and includes properties such as an id, question identifier, 
+ * next question identifiers (depending on whether the user answers yes or no), the question itself, answer options, 
+ * and an image (if applicable). The questionnaire covers both general questions and questions specific to bunions.
+ */
 export default QuestionnaireData = [
   {
     id: 0,

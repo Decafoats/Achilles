@@ -52,6 +52,7 @@ const QuestionnaireScreen = () => {
     setSelectedAnswerIndex(null);
   }, [identifier])
 
+  // Set question colour based on yes/no answer or multiple choice question
   const questionColourLogic = (index) => {
     if (currentQuestion.yesOrNo == true) {
       if (selectedAnswerIndex === 0 && index == 0) {
@@ -70,6 +71,7 @@ const QuestionnaireScreen = () => {
     }
   }
 
+  // Logic for determining next question based on yes or no answer
   const yesOrNoQuestionLogic = () => {
     if (selectedAnswerIndex === 0) {
       return currentQuestion?.nextQuestionIdentifierYes
@@ -79,6 +81,7 @@ const QuestionnaireScreen = () => {
     }
   }
 
+  // Logic for determining next question based on multiple choice answer
   const multipleChoiceQuestionLogic = () => {
     const choices = {
       "general_2": ["bunion_1", "claw_hammer_1", "claw_hammer_1", "corn_callus_1", "corn_callus_1"],
@@ -92,26 +95,36 @@ const QuestionnaireScreen = () => {
     return null;
   }
 
+  // Handles logic for button rendering and functionality
   const buttonLogic = () => {
+    // If the current question has no "yes" branch, and the user has selected "yes", and the "yes" result is not null, 
+    // or if the current question has no "no" branch, and the user has selected "no", and the "no" result is not null,
+    // display a "See Results" button.
     return (currentQuestion?.nextQuestionIdentifierYes === null && currentQuestion?.yesResult != null && selectedAnswerIndex === 0) ||
       (currentQuestion?.nextQuestionIdentifierNo === null && currentQuestion?.noResult != null && selectedAnswerIndex === 1) ? (
       <CustomButton
         text="See Results"
         onPress={() => {
+          // When the "See Results" button is pressed, create a new answer object and add it to the answers array.
           const answer = {
             question: currentQuestion?.question,
             answer: currentQuestion?.options[selectedAnswerIndex].answer,
             result: selectedAnswerIndex === 0 ? currentQuestion?.yesResult : currentQuestion?.noResult,
           };
           const updatedAnswers = [...answers, answer];
+          // Navigate to the ResultScreen and pass the updated answers array as a parameter.
           navigation.navigate("ResultScreen", { answers: updatedAnswers });
         }}
       />
     ) : selectedAnswerIndex !== null ? (
+      // If the user has selected an answer but the conditions for displaying the "See Results" button are not met,
+      // display a "Next Question" button.
       <CustomButton
         text="Next Question"
         onPress={() => {
+          // Determine the ID of the next question based on the current question's type (yes/no or multiple choice).
           const nextQuestionId = currentQuestion?.yesOrNo === true ? yesOrNoQuestionLogic() : multipleChoiceQuestionLogic();
+          // Set the next question ID as the new identifier for the quiz.
           setIdentifier(nextQuestionId);
           previousQuestions.push(currentQuestion?.identifier);
           answers.push({
@@ -122,7 +135,7 @@ const QuestionnaireScreen = () => {
           console.log(answers);
         }}
       />
-    ) : null;
+    ) : null; // If the user has not yet selected an answer, do not display any button.
   }
 
 
