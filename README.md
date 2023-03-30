@@ -1,5 +1,12 @@
+<div align="center">
+  <a href="https://github.com/Decafoats/Achilles">
+    <img src="https://drive.google.com/uc?id=1PQvXtJPQVT_ms-5S9yZ85gTKg4Xh1ykv" alt="Logo" width="215" height="215">
+  </a>
+</div>
+
 <!-- TABLE OF CONTENTS -->
 **Table of Contents:**  
+  - <a href="#-poster">Poster</a>
   - <a href="#-run-locally">Run Locally</a>
   - <a href="#-objective">Objective</a>
   - <a href="#-overview">Overview</a>
@@ -8,12 +15,8 @@
   - <a href="#-authors">Authors</a>
   - <a href="#-license">License</a>
   - <a href="#-attribution">Attribution</a>
-<div align="center">
-  <a href="https://github.com/Decafoats/Achilles">
-    <img src="https://drive.google.com/uc?id=1PQvXtJPQVT_ms-5S9yZ85gTKg4Xh1ykv" alt="Logo" width="215" height="215">
-  </a>
-</div>
 
+# 🖼 Poster: 
 <div align="center">
   <a href="https://github.com/Decafoats/Achilles">
     <img src="https://drive.google.com/uc?id=1xIrpKqT42PPXXpxkRJLG5GaI9ncNPyTU" alt="Poster" width="1728" >
