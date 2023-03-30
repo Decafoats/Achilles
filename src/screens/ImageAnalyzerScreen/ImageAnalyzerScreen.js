@@ -10,6 +10,7 @@ import { continueStatement } from '@babel/types';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import LottieView from 'lottie-react-native';
+import TypeWriter from 'react-native-typewriter';
 
 const ImageAnalyzerScreen = () => {
   const PEDICTION_ERROR = 3
@@ -173,7 +174,13 @@ const ImageAnalyzerScreen = () => {
                 autoPlay
                 loop
               />
-              <Text style={{ fontSize: height * 0.015, paddingRight: height * 0.19, fontStyle: 'italic' }}>"I'm a robot, not a fortune-teller! If you want 100% accuracy, go see a crystal ball. Otherwise, please consult a medical professional if you're worried. I'm just here to beep and boop."</Text>
+              <TypeWriter
+                typing={1}
+                style={{ fontSize: height * 0.015, paddingRight: height * 0.19, fontStyle: 'italic' }}
+                maxDelay={10}
+              >
+                "I'm a robot, not a fortune-teller! If you want 100% accuracy, go see a crystal ball. Otherwise, please consult a medical professional if you're worried. I'm just here to beep and boop."
+              </TypeWriter>
             </View>
           </View>
         )

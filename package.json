@@ -21,7 +21,8 @@
     "react-native-image-picker": "^5.0.0",
     "react-native-safe-area-context": "^4.4.1",
     "react-native-screens": "^3.18.2",
-    "react-native-svg": "^13.8.0"
+    "react-native-svg": "^13.8.0",
+    "react-native-typewriter": "^0.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
