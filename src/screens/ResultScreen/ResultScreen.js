@@ -35,8 +35,6 @@ const ResultScreen = ({ answers }) => {
     for (let i = 0; i < data.length; i++) {
       const item = data[i];
       if (currentResult !== "" && item.identifier === currentResult) {
-        console.log(item.identifier)
-        console.log(currentResult)
         return (
           <Text key={item.id} style={{ paddingVertical: 8 }}>
             {item.mediation}
