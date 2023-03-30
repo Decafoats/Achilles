@@ -54,20 +54,10 @@ const QuestionnaireScreen = () => {
 
   // Set question colour based on yes/no answer or multiple choice question
   const questionColourLogic = (index) => {
-    if (currentQuestion.yesOrNo == true) {
-      if (selectedAnswerIndex === 0 && index == 0) {
-        return styles.questions_selected_yes
-      } else if (selectedAnswerIndex === 1 && index == 1) {
-        return styles.questions_selected_no
-      } else {
-        return styles.questions
-      }
+    if (selectedAnswerIndex !== null && selectedAnswerIndex === index) {
+      return styles.questions_selected_neutral;
     } else {
-      if (selectedAnswerIndex !== null && selectedAnswerIndex === index) {
-        return styles.questions_selected_neutral;
-      } else {
-        return styles.questions
-      }
+      return styles.questions
     }
   }
 
@@ -95,47 +85,56 @@ const QuestionnaireScreen = () => {
     return null;
   }
 
-  // Handles logic for button rendering and functionality
-  const buttonLogic = () => {
-    // If the current question has no "yes" branch, and the user has selected "yes", and the "yes" result is not null, 
-    // or if the current question has no "no" branch, and the user has selected "no", and the "no" result is not null,
-    // display a "See Results" button.
-    return (currentQuestion?.nextQuestionIdentifierYes === null && currentQuestion?.yesResult != null && selectedAnswerIndex === 0) ||
-      (currentQuestion?.nextQuestionIdentifierNo === null && currentQuestion?.noResult != null && selectedAnswerIndex === 1) ? (
-      <CustomButton
-        text="See Results"
-        onPress={() => {
-          // When the "See Results" button is pressed, create a new answer object and add it to the answers array.
-          const answer = {
-            question: currentQuestion?.question,
-            answer: currentQuestion?.options[selectedAnswerIndex].answer,
-            result: selectedAnswerIndex === 0 ? currentQuestion?.yesResult : currentQuestion?.noResult,
-          };
-          const updatedAnswers = [...answers, answer];
-          // Navigate to the ResultScreen and pass the updated answers array as a parameter.
-          navigation.navigate("ResultScreen", { answers: updatedAnswers });
-        }}
-      />
-    ) : selectedAnswerIndex !== null ? (
-      // If the user has selected an answer but the conditions for displaying the "See Results" button are not met,
-      // display a "Next Question" button.
-      <CustomButton
-        text="Next Question"
-        onPress={() => {
-          // Determine the ID of the next question based on the current question's type (yes/no or multiple choice).
-          const nextQuestionId = currentQuestion?.yesOrNo === true ? yesOrNoQuestionLogic() : multipleChoiceQuestionLogic();
-          // Set the next question ID as the new identifier for the quiz.
-          setIdentifier(nextQuestionId);
-          previousQuestions.push(currentQuestion?.identifier);
-          answers.push({
-            question: currentQuestion?.question,
-            answer: currentQuestion?.options[selectedAnswerIndex].answer
-          });
-          console.log(previousQuestions);
-          console.log(answers);
-        }}
-      />
-    ) : null; // If the user has not yet selected an answer, do not display any button.
+  // This function returns a JSX button component that either leads to the results page or the next question
+  const nextOrResultsButtonLogic = () => {
+    let button;
+    if (
+      // If the current question has no more "yes" questions and the "yes" answer was selected, 
+      // or no more "no" questions and the "no" answer was selected
+      (currentQuestion?.nextQuestionIdentifierYes === null && currentQuestion?.yesResult != null && selectedAnswerIndex === 0) ||
+      (currentQuestion?.nextQuestionIdentifierNo === null && currentQuestion?.noResult != null && selectedAnswerIndex === 1)
+    ) {
+      // Create a "See Results" button that navigates to the results page and includes 
+      // the selected answer in the answer array
+      button = (
+        <CustomButton
+          text="See Results"
+          onPress={() => {
+            const answer = {
+              question: currentQuestion?.question,
+              answer: currentQuestion?.options[selectedAnswerIndex].answer,
+              result: selectedAnswerIndex === 0 ? currentQuestion?.yesResult : currentQuestion?.noResult,
+            };
+            const updatedAnswers = [...answers, answer];
+            navigation.navigate("ResultScreen", { answers: updatedAnswers });
+          }}
+        />
+      );
+    } else if (selectedAnswerIndex !== null) {
+      // Create a "Next Question" button that loads the next question and saves the current answer 
+      // in the answer array
+      button = (
+        <CustomButton
+          text="Next Question"
+          onPress={() => {
+            const nextQuestionId = currentQuestion?.yesOrNo === true ? yesOrNoQuestionLogic() : multipleChoiceQuestionLogic();
+            setIdentifier(nextQuestionId);
+            previousQuestions.push(currentQuestion?.identifier);
+            answers.push({
+              question: currentQuestion?.question,
+              answer: currentQuestion?.options[selectedAnswerIndex].answer
+            });
+            console.log(previousQuestions);
+            console.log(answers);
+          }}
+        />
+      );
+    } else {
+      // If no answer was selected, return null
+      button = null;
+    }
+
+    return button;
   }
 
 
@@ -180,12 +179,12 @@ const QuestionnaireScreen = () => {
         </View>
         {
           selectedAnswerIndex === null ? null : (
-            <Text style={{ fontSize: 17, textAlign: 'center', fontWeight: 'bold' }}>Toe-rific!</Text>
+            <Text style={{ fontSize: 17, textAlign: 'center', fontWeight: 'bold' }}>Answer Selected!</Text>
           )
         }
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
           <View style={[styles.button, { width: width * 0.25 }]}>
-            {previousQuestions.length !== 0 && (
+            {previousQuestions.length !== 0 ? (
               <CustomButton
                 text="Previous Question"
                 onPress={() =>
@@ -198,8 +197,13 @@ const QuestionnaireScreen = () => {
                   )
                 }
               />
+            ) : (
+              <CustomButton
+                text="Back to Home"
+                onPress={() => navigation.navigate("HomeScreen")}
+              />
             )}
-            {buttonLogic()}
+            {nextOrResultsButtonLogic()}
           </View >
         </View >
       </View >

@@ -9,6 +9,7 @@ import { PermissionsAndroid } from 'react-native';
 import { continueStatement } from '@babel/types';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import LottieView from 'lottie-react-native';
 
 const ImageAnalyzerScreen = () => {
   const PEDICTION_ERROR = 3
@@ -159,6 +160,24 @@ const ImageAnalyzerScreen = () => {
         style={[styles.logo, { height: height * 0.3 }]}
         resizeMode="contain"
       />
+
+      {
+        prediction == null ? (
+          null
+        ) : (
+          <View style={{ position: 'absolute', bottom: - (height * 0.1), left: 5 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+              <LottieView
+                source={require('../../../assets/animations/134244-futuristic-robot-constructor.json')}
+                style={{ width: height * 0.1 }}
+                autoPlay
+                loop
+              />
+              <Text style={{ fontSize: height * 0.015, paddingRight: height * 0.19, fontStyle: 'italic' }}>"I'm a robot, not a fortune-teller! If you want 100% accuracy, go see a crystal ball. Otherwise, please consult a medical professional if you're worried. I'm just here to beep and boop."</Text>
+            </View>
+          </View>
+        )
+      }
 
       {displayImageLogic()}
 
