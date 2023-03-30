@@ -33,8 +33,6 @@ const QuestionnaireScreen = () => {
         default:
           break;
       }
-      console.log(route.params.prediction);
-      console.log(identifier);
     }
   }, [route.params.prediction]);
 
@@ -124,8 +122,6 @@ const QuestionnaireScreen = () => {
               question: currentQuestion?.question,
               answer: currentQuestion?.options[selectedAnswerIndex].answer
             });
-            console.log(previousQuestions);
-            console.log(answers);
           }}
         />
       );
@@ -192,8 +188,6 @@ const QuestionnaireScreen = () => {
                     previousQuestions[previousQuestions.length - 1],
                     previousQuestions.pop(),
                     answers.pop(),
-                    console.log(previousQuestions),
-                    console.log(answers)
                   )
                 }
               />

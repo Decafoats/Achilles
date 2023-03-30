@@ -26,9 +26,6 @@ const HomeScreen = () => {
     setShowTerms(false);
   };
 
-  console.log(acceptedTerms)
-  console.log(showTerms)
-
   return (
 
     <View style={styles.root} >
@@ -40,12 +37,12 @@ const HomeScreen = () => {
 
       <LottieView
         source={require('../../../assets/animations/140209-feet-walking-loader.json')}
-        style={{ width: height * 0.4 }}
+        style={{ width: height * 0.4, marginVertical: height * 0.04 }}
         autoPlay
         loop
       />
 
-      <View style={[styles.button, { width: width * 0.4, marginVertical: height * 0.1 }]}>
+      <View style={[styles.button, { width: width * 0.4, marginTop: height * 0.05 }]}>
         <CustomButton text="Questionnaire" onPress={onQuestionnairePressed} />
         <CustomButton text="Image Analyzer" onPress={onImageAnalyzerPressed} />
       </View>
@@ -147,10 +144,8 @@ const styles = StyleSheet.create({
     maxHeight: 250,
   },
   button: {
-    //width: 180,
     flexDirection: 'row',
     justifyContent: 'center',
-    //marginVertical: 280,
   },
   modalContainer: {
     flex: 1,

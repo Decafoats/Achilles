@@ -55,18 +55,15 @@ const ImageAnalyzerScreen = () => {
             toast('Take a picture canceled.')
           } else if (res.errorCode) {
             toast('Error while opening camera.', res.errorCode)
-            console.log(res.errorMessage)
           } else {
             const filename = res.assets[0].uri.substring(res.assets[0].uri.lastIndexOf('/') + 1);
-            console.log(res.assets[0].uri)
             setState({ photo: res.assets[0].uri })
             setFileName(filename);
             setPrediction(null);
           }
         })
-        console.log("Camera permission given");
       } else {
-        console.log("Camera permission denied");
+        null
       }
     } catch (err) {
       console.warn(err);
@@ -80,10 +77,8 @@ const ImageAnalyzerScreen = () => {
         toast('Gallery canceled.')
       } else if (res.errorCode) {
         toast('Error while opening gallery.', res.errorCode)
-        console.log(res.errorMessage)
       } else {
         const filename = res.assets[0].uri.substring(res.assets[0].uri.lastIndexOf('/') + 1);
-        console.log(res.assets[0].uri)
         setState({ photo: res.assets[0].uri })
         setFileName(filename);
         setPrediction(null);
@@ -137,8 +132,6 @@ const ImageAnalyzerScreen = () => {
           ? state.photo
           : state.photo.replace("file://", "")
     });
-    console.log(state.photo);
-    console.log("filename: " + filename)
     // Use the fetch function to send the photo to the server and get a prediction back
     fetch('https://achilles-flask.azurewebsites.net/upload', {
       method: 'POST',
@@ -146,9 +139,7 @@ const ImageAnalyzerScreen = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         setPrediction(data);
-        console.log(prediction);
         setLoading(false);
       });
   };
