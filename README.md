@@ -16,7 +16,7 @@
 
 <div align="center">
   <a href="https://github.com/Decafoats/Achilles">
-    <img src="https://drive.google.com/uc?export=view&id=1JOcXwgsuemJQVn8mOlz2QyPsKA9p3TaI" alt="Poster">
+    <img src="https://drive.google.com/uc?id=1xIrpKqT42PPXXpxkRJLG5GaI9ncNPyTU" alt="Poster" width="1728" >
   </a>
 </div>
 
