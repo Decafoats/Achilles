@@ -61,6 +61,7 @@ The reasoning for this project is that foot health is essential, and the average
 
 # 📹 Vlogs:
 
+- Commercial: https://www.youtube.com/watch?v=Nn_qaZUiJDI
 - Vlog #1: https://www.youtube.com/watch?v=eNYMMGQU37E
 - Vlog #2: https://www.youtube.com/watch?v=1mtagPsDHrE
 - Vlog #3: https://www.youtube.com/watch?v=FPJ304L_uD8
