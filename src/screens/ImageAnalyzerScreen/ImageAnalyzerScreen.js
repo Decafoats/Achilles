@@ -1,5 +1,5 @@
 // Import the necessary libraries and components
-import { View, Text, Image, TouchableOpacity, StyleSheet, useWindowDimensions, ToastAndroid, async } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, useWindowDimensions, ToastAndroid, async, Easing } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Logo from '../../../assets/images/Achilles.png'
 import CustomButton from '../../components/CustomButton/CustomButton';
@@ -8,8 +8,12 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { PermissionsAndroid } from 'react-native';
 import { continueStatement } from '@babel/types';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import LottieView from 'lottie-react-native';
+import TypeWriter from 'react-native-typewriter';
 
 const ImageAnalyzerScreen = () => {
+  const PEDICTION_ERROR = 3
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
 
@@ -17,7 +21,7 @@ const ImageAnalyzerScreen = () => {
   const [state, setState] = useState({
     photo: ''
   })
-  const [filename, setFileName] = useState()
+  const [filename, setFileName] = useState(null)
   const [prediction, setPrediction] = useState(null)
 
   // Camera and gallery settings
@@ -51,18 +55,15 @@ const ImageAnalyzerScreen = () => {
             toast('Take a picture canceled.')
           } else if (res.errorCode) {
             toast('Error while opening camera.', res.errorCode)
-            console.log(res.errorMessage)
           } else {
             const filename = res.assets[0].uri.substring(res.assets[0].uri.lastIndexOf('/') + 1);
-            console.log(res.assets[0].uri)
             setState({ photo: res.assets[0].uri })
             setFileName(filename);
             setPrediction(null);
           }
         })
-        console.log("Camera permission given");
       } else {
-        console.log("Camera permission denied");
+        null
       }
     } catch (err) {
       console.warn(err);
@@ -76,15 +77,40 @@ const ImageAnalyzerScreen = () => {
         toast('Gallery canceled.')
       } else if (res.errorCode) {
         toast('Error while opening gallery.', res.errorCode)
-        console.log(res.errorMessage)
       } else {
         const filename = res.assets[0].uri.substring(res.assets[0].uri.lastIndexOf('/') + 1);
-        console.log(res.assets[0].uri)
         setState({ photo: res.assets[0].uri })
         setFileName(filename);
         setPrediction(null);
       }
     })
+  }
+
+  const displayImageLogic = () => {
+    // Check if a photo is available
+    if (state.photo === "") {
+      // If no photo is available, display a message
+      return (
+        <Text style={styles.italicText}>
+          Take a photo with your camera, or upload an image from your gallery!
+        </Text>
+      );
+    }
+
+    // Check if prediction is available
+    if (prediction === null) {
+      // If no prediction is available, display the photo
+      return (
+        <Image
+          source={{ uri: state.photo }}
+          style={[styles.image, { height: height }]}
+          resizeMode="contain"
+        />
+      );
+    }
+
+    // Return null if no photo or prediction is available
+    return null;
   }
 
   // Initialize the loading state variable and set it to true when the form is submitted
@@ -106,8 +132,6 @@ const ImageAnalyzerScreen = () => {
           ? state.photo
           : state.photo.replace("file://", "")
     });
-    console.log(state.photo);
-    console.log("filename: " + filename)
     // Use the fetch function to send the photo to the server and get a prediction back
     fetch('https://achilles-flask.azurewebsites.net/upload', {
       method: 'POST',
@@ -115,9 +139,7 @@ const ImageAnalyzerScreen = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         setPrediction(data);
-        console.log(prediction);
         setLoading(false);
       });
   };
@@ -131,26 +153,65 @@ const ImageAnalyzerScreen = () => {
         resizeMode="contain"
       />
 
-      {state.photo == "" ? (
-        <Text
-          style={styles.italicText}>
-          Take a photo with your camera, or upload an image from your gallery!
-        </Text>
-      ) : (
-        <Image
-          source={{ uri: state.photo }}
-          style={[styles.image, { height: height }]}
-          resizeMode="contain"
-        />
-      )}
+      {
+        prediction == null ? (
+          null
+        ) : (
+          <View style={{ position: 'absolute', bottom: - (height * 0.1), left: 5 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+              <LottieView
+                source={require('../../../assets/animations/134244-futuristic-robot-constructor.json')}
+                style={{ width: height * 0.1 }}
+                autoPlay
+                loop
+              />
+              <TypeWriter
+                typing={1}
+                style={{ fontSize: height * 0.015, paddingRight: height * 0.19, fontStyle: 'italic' }}
+                maxDelay={10}
+              >
+                "I'm a robot, not a fortune-teller! If you want 100% accuracy, go see a crystal ball. Otherwise, please consult a medical professional if you're worried. I'm just here to beep and boop."
+              </TypeWriter>
+            </View>
+          </View>
+        )
+      }
+
+      {displayImageLogic()}
 
       {prediction ? (
-        <Text style={styles.italicText}>
-          There is a {parseFloat(prediction.confidence_score.substring(0, 6)) * 100}% chance that you have {prediction.class_name}
-        </Text>
+        <View style={{ paddingVertical: 25 }}>
+          <AnimatedCircularProgress
+            style={styles.animatedCircularProgress}
+            size={height * 0.22}
+            width={10}
+            fill={parseFloat(prediction.confidence_score.substring(0, 4)) * 100 - PEDICTION_ERROR}
+            tintColor="#005691"
+            backgroundColor="#98c5e4"
+            backgroundWidth={5}
+            lineCap="round"
+            duration={1800}>
+            {
+              (fill) => (
+                <Text style={{
+                  fontSize: height * 0.022,
+                  textAlign: 'center',
+                  textShadowColor: '#98c5e4',
+                  textShadowOffset: { width: 0, height: 0 },
+                  textShadowRadius: 10,
+                  color: '#005691'
+                }}>
+                  {parseFloat(prediction.confidence_score.substring(0, 4)) * 100 - PEDICTION_ERROR}%
+                  {'\n'}{prediction.class_name}
+                </Text>
+              )
+            }
+          </AnimatedCircularProgress>
+        </View>
       ) : (
         <Text></Text>
-      )}
+      )
+      }
 
       <View style={styles.button}>
         <CustomButton text="Camera" onPress={() => requestCameraPermission()} />
@@ -158,16 +219,18 @@ const ImageAnalyzerScreen = () => {
         {filename && <CustomButton text="Predict" onPress={onSubmit} />}
       </View>
 
-      {prediction == null ? (
-        null
-      ) : (
-        <View style={styles.questionnaireContainer}>
-          <Text style={{ fontSize: 15, fontWeight: 'bold', textAlign: 'center' }}>Answer a short questionnaire to increase the result accuracy!</Text>
-          <View style={styles.questionnaireButton}>
-            <CustomButton text="Questionnaire" onPress={() => navigation.navigate("QuestionnaireScreen", { prediction: prediction.class_name.trim() })} />
+      {
+        prediction == null ? (
+          null
+        ) : (
+          <View style={styles.questionnaireContainer}>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', textAlign: 'center' }}>Answer a short questionnaire to increase the result accuracy!</Text>
+            <View style={styles.questionnaireButton}>
+              <CustomButton text="Questionnaire" onPress={() => navigation.navigate("QuestionnaireScreen", { prediction: prediction.class_name.trim() })} />
+            </View>
           </View>
-        </View>
-      )}
+        )
+      }
     </View >
   );
 };
@@ -209,7 +272,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     width: 150,
+  },
+  animatedCircularProgress: {
+    // paddingVertical: 15,
   }
+
 });
 
 export default ImageAnalyzerScreen

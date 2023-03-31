@@ -1,7 +1,9 @@
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, useWindowDimensions } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import LottieView from 'lottie-react-native';
 
 const LoadingScreen = () => {
+  const { height } = useWindowDimensions();
   // Took these jokes from : https://www.welovepuns.com/best-foot-puns/
   const [jokesArray, setJokesArray] = useState([
     "What is a foot’s favorite breakfast food? Toe-st.",
@@ -49,7 +51,12 @@ const LoadingScreen = () => {
 
   return (
     <View style={styles.root}>
-      <ActivityIndicator size="large" color="#005691" />
+      <LottieView
+        source={require('../../../assets/animations/19910-feet-finger.json')}
+        style={{ width: height * 0.15 }}
+        autoPlay
+        loop
+      />
       <Text style={styles.text}>Loading...</Text>
       <Text style={[styles.text, { fontSize: 20, fontWeight: 'bold', paddingTop: 20 }]}>Enjoy this joke while you wait:</Text>
       <Text style={[styles.text, { fontSize: 15, paddingTop: 20 }]}>{randomJoke()}</Text>

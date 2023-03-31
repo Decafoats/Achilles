@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Logo from '../../../assets/images/Achilles.png'
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 
 const HomeScreen = () => {
 
@@ -25,9 +26,6 @@ const HomeScreen = () => {
     setShowTerms(false);
   };
 
-  console.log(acceptedTerms)
-  console.log(showTerms)
-
   return (
 
     <View style={styles.root} >
@@ -37,7 +35,14 @@ const HomeScreen = () => {
         resizeMode="contain"
       />
 
-      <View style={[styles.button, { width: width * 0.4, marginVertical: height * 0.4 }]}>
+      <LottieView
+        source={require('../../../assets/animations/140209-feet-walking-loader.json')}
+        style={{ width: height * 0.4, marginVertical: height * 0.04 }}
+        autoPlay
+        loop
+      />
+
+      <View style={[styles.button, { width: width * 0.4, marginTop: height * 0.05 }]}>
         <CustomButton text="Questionnaire" onPress={onQuestionnairePressed} />
         <CustomButton text="Image Analyzer" onPress={onImageAnalyzerPressed} />
       </View>
@@ -111,6 +116,7 @@ const HomeScreen = () => {
                   <Text style={styles.sectionText}>
                     If you have any questions or comments about these Terms or Achilles, please contact the developers at xzn628@uregina.ca.
                   </Text>
+
                   <View style={{ alignItems: 'center', paddingTop: 20 }} >
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: width * 0.25 }}>
                       <CustomButton text="I Accept" onPress={acceptTerms} />
@@ -138,10 +144,8 @@ const styles = StyleSheet.create({
     maxHeight: 250,
   },
   button: {
-    //width: 180,
     flexDirection: 'row',
     justifyContent: 'center',
-    //marginVertical: 280,
   },
   modalContainer: {
     flex: 1,
