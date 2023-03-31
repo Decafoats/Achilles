@@ -47,7 +47,7 @@ Please refer to this official [React Native documentation](https://reactnative.d
 
 👉🏼 Don't forget to explore our [Wiki page](https://github.com/Decafoats/Achilles/wiki) for more information! 👈🏼
 
-# 🥅 Objective: 
+# 🎯 Objective: 
 
 We want to deliver a product to assist the general public in analyzing their feet health. 
 
