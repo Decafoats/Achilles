@@ -11,7 +11,7 @@
   - <a href="#-objective">Objective</a>
   - <a href="#-overview">Overview</a>
   - <a href="#-reasoning">Reasoning</a>
-  - <a href="#-vlogs">Vlogs</a>
+  - <a href="#-videos">Videos</a>
   - <a href="#-authors">Authors</a>
   - <a href="#-license">License</a>
   - <a href="#-attribution">Attribution</a>
@@ -59,9 +59,14 @@ For our final project for ENSE 400, we want to propose an automated foot analysi
 
 The reasoning for this project is that foot health is essential, and the average person doesn't know how to diagnose their symptoms. A person might experience foot pain, mild or acute, and might shrug it off because they cannot be bothered to reach out to a specialist. Even though there are simple solutions such as "stop buying shoes that are too small" or "decrease your running frequency,". Or, they can have serious problems such as diabetes and is in dire need of a consultation with a doctor immediately. Taking care of your feet early in the symptoms is crucial as some issues can have irreversible effects, and we hope our project will assist users in those regards.
 
-# 📹 Vlogs:
+# 📹 Videos:
+
+## Commercial & Demo
 
 - Commercial: https://www.youtube.com/watch?v=Nn_qaZUiJDI
+- Project Demo: https://www.youtube.com/watch?v=No7I343uAg8
+
+## Vlogs: 
 - Vlog #1: https://www.youtube.com/watch?v=eNYMMGQU37E
 - Vlog #2: https://www.youtube.com/watch?v=1mtagPsDHrE
 - Vlog #3: https://www.youtube.com/watch?v=FPJ304L_uD8
