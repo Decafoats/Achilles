@@ -45,7 +45,9 @@ Please refer to this official [React Native documentation](https://reactnative.d
 
 ## Check out the Wiki page!
 
-👉🏼 Don't forget to explore our [Wiki page](https://github.com/Decafoats/Achilles/wiki) for more information! 👈🏼
+👉🏼 [Wiki page](https://github.com/Decafoats/Achilles/wiki) 👈🏼
+
+Don't miss out on the valuable information and resources available in our wiki. It's a go-to destination for all your documentation needs. Come visit our wiki and enhance your understanding of our project. Happy exploring!
 
 # 🎯 Objective: 
 
